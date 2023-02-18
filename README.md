@@ -8,3 +8,13 @@ https://github.com/AleezahAthar/MLPortfolio/blob/57a334971b53ae086fc2676a7d4fcfb
 
 Portfolio Component 1 Data Exploration Document: 
 https://github.com/AleezahAthar/MLPortfolio/blob/57a334971b53ae086fc2676a7d4fcfb7509295ab/Portfolio%20component%201%20document.pdf
+
+Portfolio Component 2 Linear Models Regression: 
+https://github.com/AleezahAthar/MLPortfolio/blob/71cf2ddd6dcdc3102be88c274d6c7c6fc8f6b82a/Linear%20Models/Regression.pdf
+
+Portfolio Component 2 Linear Models Classification: 
+https://github.com/AleezahAthar/MLPortfolio/blob/71cf2ddd6dcdc3102be88c274d6c7c6fc8f6b82a/Linear%20Models/Classification.pdf
+
+
+
+
