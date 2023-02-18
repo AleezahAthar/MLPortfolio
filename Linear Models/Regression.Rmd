@@ -1,0 +1,135 @@
+
+---
+title: "Regression"
+author: "Aleezah Athar"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+Date: 11th Feb, 2023
+---
+
+
+Linear regression works by using the x values, called predictors, to find y values, called target values. We aim to find the relationship between x and y. In linear regression, we define the formula using w and b, where w is the slope of the line and b is the intercept. It is important to note that w quantifies the amount of change in y for every unit change in x. Furthermore, linear regression is used when our target variable is quantitative. The strengths of linear regression are that its a relatively simple algorithm, works well when data follow a linear pattern, and has low variance. However, the weakness is that it has a high bias because it tends to assume and look for a linear relationship in the data. Linear models in general have advantages that are that they are easy to interpret, computationally efficient, can handle missing data points, and can be extended to non-linear relationships if we use complex transformation functions. However, the disadvantages are that they assume a linear relationship where there might not be one and tend to overfit.  
+
+This is a data set showing the energy use of appliances (in Wh) and the energy use of light fixtures in a hour(in Wh) and the corresponding temperature, humidity and weather conditions at the time of recording. This dataset is from the UCI Machine Learning Repository.
+
+## Data Exploration
+
+First we set the seed to 3 to get the same results each time 
+Then we read in the csv file which contains out data
+```{r}
+set.seed(3)
+df<-read.csv("energydata_complete.csv")
+```
+
+Divide into 80/20 train/test
+Then we randomly select 80% of the rows to be the training data and 20% to be the testing data. 
+```{r}
+set.seed(3)
+i<-sample(1:nrow(df), nrow(df)*0.8, replace=FALSE)
+train<-df[i,]
+test<-df[-i,]
+```
+
+Use at least 5 R functions for data exploration, using the training data. 
+We can use the names, dimention, summary, structure and head functions to get information about the data. We can also use the colSums and is.na functions together to check for any NA values. 
+```{r}
+names(train)
+dim(train)
+summary(train)
+str(train)
+head(train)
+colSums(is.na(train))
+```
+## Data Visualization 
+
+Create at least 2 informative graphs, using the training data
+We use a boxplot to compare the temperature in the kitchen vs in the living room area and a violin plot to see the energy use of appliances 
+```{r}
+boxplot(train$T1,train$T2, 
+        xlab="Kitchen vs Living room area", ylab="Temp in Celsius")
+#install.packages("vioplot")
+library("vioplot")
+vioplot(train$Appliances,
+        xlab="Energy use of appliances", ylab="watt-hour")
+```
+## Linear Regression
+
+Build a simple linear regression model (one predictor) and output the summary.
+We use the lm and summary function for this
+```{r}
+lm1<-lm(Appliances~RH_out, data=df)
+summary(lm1)
+```
+We learn the following from the data: The b is 181 and the w is -1.05. For every percentage increase in humidity, we can expect the Appliance energy use to decrease by 1.05 Wh. The three asterisks tell us that R thought that Rh_out was a good predictor. The R-squared is low, closer to 0, which means that this wasn't a good fit. Our F-statistic is greater than 1 and our p-value is very low. Therefore this is an okay model. 
+
+
+Plot the residuals
+```{r}
+par(mfrow=c(2,2)) #change panel layout to 2 by 2
+plot(lm1) 
+```
+
+Residuals show how poorly a model represents data. The residuals vs fitted graph show a horizontal line which indicates a linear relationship but the data is not spread evenly around the line. The Normal Q-Q shows that initially, the residuals fit on the straight line but then do not which isn't good. The Scale-Location plot doesn't show us if the points are spaced out equally but they do not seem to be as some points are closer than others. From the residuals vs leverage plot, we can see that most of the points have lower leverage(which means that if we remove these observations the coefficients of the model would not change noticeably). Most points are outside of Cook's distance and are considered to be influential observations. 
+
+Next, we repeat the same process using different combinations of predictors
+```{r}
+lm2<-lm(Appliances~RH_out+T2+T6, data=df)
+summary(lm2)
+```
+```{r}
+par(mfrow=c(2,2))
+plot(lm2)
+```
+
+```{r}
+lm3<-lm(log(Appliances)~RH_out+T2+T6+Windspeed+T_out, data=df)
+summary(lm3)
+```
+```{r}
+par(mfrow=c(2,2))
+plot(lm3)
+```
+We think the third model is the best because the residuals are spread out more evenly around the red lines. The red lines are also more linear. The adjusted R-squared is also 3 times higher than in the other two models. All the predictors in the 3rd model have 3 asterisks which indicate that R thinks they are good predictors. Although, the F statistic is lower than the first but higher than the second 
+
+## Evaluate on test data 
+
+Using the 3 models, we will predict and evaluate on the test data using metrics correlation and mse(mean squared error). 
+```{r}
+pred1 <- predict(lm1, newdata=test)
+cor1 <- cor(pred1, test$Appliances)
+mse1 <- mean((pred1-test$Appliances)^2) 
+rmse1 <- sqrt(mse1)
+print(paste('correlation:', cor1))
+print(paste('mse:', mse1))
+print(paste('rmse:', rmse1))
+```
+
+```{r}
+pred2 <- predict(lm2, newdata=test)
+cor2 <- cor(pred2, test$Appliances)
+mse2 <- mean((pred2-test$Appliances)^2) 
+rmse2 <- sqrt(mse2)
+print(paste('correlation:', cor2))
+print(paste('mse:', mse2))
+print(paste('rmse:', rmse2))
+```
+
+```{r}
+pred3 <- predict(lm3, newdata=test)
+pred3<-exp(pred3)
+cor3 <- cor(pred3, test$Appliances)
+mse3 <- mean((pred3-test$Appliances)^2) 
+rmse3 <- sqrt(mse3)
+print(paste('correlation:', cor3))
+print(paste('mse:', mse3))
+print(paste('rmse:', rmse3))
+```
+
+## Results 
+
+We can see that as we add more and more predictors, there is a significant improvement in the correlation. We ideally want to see a correlation close to +1 or -1 and we can see that the correlation of the 3rd model is closer to +1 than the other two. Adding more predictors allows the model to account for more variations that are not accounted for by a lower number of predictors. While the third model did have the best correlation, it suffered from a higher MSE value than the other models indicating a higher presence of errors. Model three, however, is still better able to fit the data and thus produce better results due to its correlation. In general, however, these three models are ineffective at explaining the high variance in the data and produce inaccurate results, indicating that linear regression may not be the best approach for this data set.

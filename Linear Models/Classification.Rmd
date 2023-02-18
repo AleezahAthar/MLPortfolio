@@ -1,0 +1,142 @@
+---
+title: "Classification"
+author: "Aleezah Athar"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+Date: 11th Feb, 2023
+---
+
+
+In classification, our target variable is qualitative. We want to know what class an observation falls into. Usually, the target variable in classification is binary. Linear models for classification create decision boundaries to separate observations into regions in which a majority of the observations belong to the same class. Classification linear models are useful when the target variable is qualitative which is an advantage. A disadvantage would be that we cannot use these when our target variable is quantitative, in which case linear regression would have more advantages. Classification linear models also have the general advantages and disadvantages of all linear models. Linear models' advantages are that they are easy to interpret, computationally efficient, can handle missing data points, and can be extended to non-linear relationships if we use complex transformation functions. However, the disadvantages are that they assume a linear relationship where there might not be one and tend to overfit. 
+
+This dataset is from https://archive.ics.uci.edu/ml/datasets/Bank+Marketing
+
+## Data Exploration
+
+First we set the seed to 3 to get the same results each time 
+Then we read in the csv file which contains our data
+```{r}
+set.seed(3)
+df <- read.csv("bank-full.csv", sep = ";", quote = "")
+df
+```
+
+We change all the character variables to factor variables so we can do classification. 
+Next, we divide into 80/20 train/test
+Then we randomly select 80% of the rows to be the training data and 20% to be the testing data. 
+```{r}
+set.seed(3)
+for(i in 1:ncol(df)){
+  if(is.character(df[,i])){
+    df[,i] <- as.factor(df[,i])
+  }
+}
+i<-sample(1:nrow(df), nrow(df)*0.8, replace=FALSE)
+train<-df[i,]
+test<-df[-i,]
+```
+
+We use at least 5 R functions for data exploration, using the training data. 
+We can use the names, dimension, summary, structure and head functions to get information about the data. We can also use the colSums and is.na functions together to check for any NA values. 
+```{r}
+names(train)
+dim(train)
+summary(train)
+str(train)
+head(train)
+colSums(is.na(train))
+```
+## Data Visualization 
+
+Creating 2 informative graphs using the training data. 
+```{r}
+plot(train$X.y.)
+boxplot(train$X.age.)
+```
+
+## Logistic Regression
+
+Building a logistic regression model and outputting the summary using the glm and summary functions. 
+```{r}
+glm1<-glm(X.y.~., data=train, family=binomial)
+summary(glm1)
+```
+
+The deviance residual is a mathematical transformation of the loss function and quantifies a given point's contribution to the overall likehood. They can be used to form RSS-like statistics We notice that the residual deviance, which is the lack of fit of the entire model, is much lower than the null deviance, which is the lack of fit of the model considering only the intercept. This is what we want to see and indicates that our model is good. The AIC stands for Akaike Information Criterion, is based on deviance and should be lower. Finally, the coefficients quantifies the difference in log odds of a target variable for each predictor. 
+
+## Naive Bayes Model 
+
+Building a Naive Bayes model and output what the model learned using the naiveBayes function. We first need to load the library e1071 to use this function
+```{r}
+library(e1071)
+nb1 <- naiveBayes(X.y.~.,data=train)
+nb1
+```
+The prior for our target variable y, which is whether or not a client will subscribe to a term deposit, is called A-priori and is equal to 0.88 for "no" and 0.12 for "yes". Furthermore, the likelihood data is in terms of conditional probabilities. Discrete data tells us how likely someone from each category is to subscribe. For example, out of the people who subscribed, most are likely to be married then single and then divorced. For continuous variables, the mean and standard deviation are given as we can see for age. The mean age for the people who subscribed is 41 vs 40 for those who didn't. However, our data exploration told us that the median amount of people who participated is around 40 so this makes sense.
+
+## Evaluate on Test Data
+
+We use the predict function to test our model on the test data. And we also check the accuracy of using the Logistic regression. 
+
+```{r}
+probs <- predict(glm1,newdata=test, type="response")
+pred <- ifelse(probs>0.5,2,1)
+pred <- as.factor(pred)
+levels(pred) <- list("no"="1","yes"="2")
+acc <- mean(as.integer(pred)==as.integer(test$X.y.))
+print(paste("glm1 accuracy: ", acc))
+table(pred, test$X.y.)
+```
+
+On the first run we install the caret package. Then we change the labels of the factor variables in test to be the same as pred. And then check the structure. Finally, we run the confusionMatrix function.  
+
+```{r}
+#install.packages('caret', dependencies = T)
+levels(test$X.y.)<-c("no", "yes")
+library(caret)
+str(test$X.y.)
+str(pred)
+confusionMatrix(pred,reference=test$X.y.)
+```
+We load the library ROCR. The ROC is a curve that plots the true positive rate (TPR) against the false positive rate (FPR) at various threshold settings. The AUC is the area under the ROC curve. A good AUC is close to 1 than 0.5. Also we like to see the ROC shoot up rather quickly.
+```{r}
+library(ROCR)
+p <- predict(glm1, newdata=test, type="response")
+pr <- prediction(p, test$X.y.)
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+```
+
+```{r}
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+```
+Our AUC is close to 1 which is considered good. 
+
+## Evaluate on test data 
+Using the predict function. 
+```{r}
+p1<-predict(nb1, newdata=test, type="class")
+table(p1, test$X.y.)
+```
+```{r}
+levels(p1)<-c("no", "yes")
+str(p1)
+mean(p1==test$X.y.)
+```
+We got a slightly lower value with Naive Bayes (0.88) than we did with logistic regression(0.90). This could be due to the fact that Naive Bayes works better with smaller data sets however, our data set is rather large. 
+
+
+## Strengths and Weaknesses of Logistic Regression and Naive Bayes
+
+The strengths of these types of Logistic regression linear models are that they separate classes well if they are linearly separable, are computationally cheap, and have a nice probabilistic output. However, they're prone to underfitting. The strengths of Naive Bayes Linear models are that they works well with small data sets, are easy to implement, easy to interpret, and handle high dimensions well. However, it may be outperformed for larger data sets, it makes guesses, and it assumes predictors are independent. 
+
+## Benefits and drawbacks of the classification metrics used. 
+
+Many metrics can be used to access classification. In this project, we applied sensitivity, specificity, and accuracy. Specificity gets information on the true negative rate. The sensitivity gives information on the true positive rate. Furthermore, accuracy is the number of accurate predictions divided by the total predictions. Although it is a useful tool, it does not give us information on the true positive rate and the true negative rate which is when we use sensitivity and specificity. 
