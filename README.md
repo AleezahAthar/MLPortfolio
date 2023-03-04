@@ -15,6 +15,14 @@ https://github.com/AleezahAthar/MLPortfolio/blob/71cf2ddd6dcdc3102be88c274d6c7c6
 Portfolio Component 2 Linear Models Classification: 
 https://github.com/AleezahAthar/MLPortfolio/blob/71cf2ddd6dcdc3102be88c274d6c7c6fc8f6b82a/Linear%20Models/Classification.pdf
 
+Portfolio Component 3 ML Algorithms from Scratch Logistic Regression(completed by Aleezah Athar):
+https://github.com/AleezahAthar/MLPortfolio/blob/5a8578da19b437c7e844a4e87d8869a84f14d1c4/ML%20Algorithms%20From%20Scratch/LogisticRegressionFromScratch.cpp
+
+Portfolio Component 3 ML Algorithms from Scratch Naive Bayes(completed by Umaid Ahmed):
+https://github.com/AleezahAthar/MLPortfolio/blob/5a8578da19b437c7e844a4e87d8869a84f14d1c4/ML%20Algorithms%20From%20Scratch/NaiveBayes.cpp
+
+Portfolio Component 3 ML Algorithms from Scratch document:
+https://github.com/AleezahAthar/MLPortfolio/blob/5a8578da19b437c7e844a4e87d8869a84f14d1c4/ML%20Algorithms%20From%20Scratch/ML%20Algorithms%20from%20Scratch.pdf
 
 
 
