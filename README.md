@@ -24,5 +24,9 @@ https://github.com/AleezahAthar/MLPortfolio/blob/5a8578da19b437c7e844a4e87d8869a
 Portfolio Component 3 ML Algorithms from Scratch document:
 https://github.com/AleezahAthar/MLPortfolio/blob/5a8578da19b437c7e844a4e87d8869a84f14d1c4/ML%20Algorithms%20From%20Scratch/ML%20Algorithms%20from%20Scratch.pdf
 
+Portfolio Component 4 Similarity and Ensemble:
+This was a group project 
+I completed the Classification portion of this project https://github.com/AleezahAthar/MLPortfolio/blob/8ce08129e6557c20823749abfc9706c09aaa036c/Similarity%20and%20Ensemble/Classification.pdf
+
 
 
