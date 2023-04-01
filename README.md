@@ -28,5 +28,8 @@ Portfolio Component 4 Similarity and Ensemble:
 This was a group project 
 I completed the Classification portion of this project https://github.com/AleezahAthar/MLPortfolio/blob/8ce08129e6557c20823749abfc9706c09aaa036c/Similarity%20and%20Ensemble/Classification.pdf
 
+Optional Portfolio Component Ensemble Learning:
+https://github.com/AleezahAthar/MLPortfolio/blob/db540fa75ab1752c8080295a6c1df2cb127a73ad/Ensemble%20Learning/Ensemble%20Learning.pdf
+
 
 
