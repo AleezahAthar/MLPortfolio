@@ -31,5 +31,6 @@ I completed the Classification portion of this project https://github.com/Aleeza
 Optional Portfolio Component Ensemble Learning:
 https://github.com/AleezahAthar/MLPortfolio/blob/db540fa75ab1752c8080295a6c1df2cb127a73ad/Ensemble%20Learning/Ensemble%20Learning.pdf
 
-
+Portfolio Component 5 Machine Learning with sklearn:
+https://github.com/AleezahAthar/MLPortfolio/blob/217a2e0368c099edf9894b700b9b2e62463fc89d/ML%20with%20sklearn/ML%20with%20SKLearn.pdf
 
