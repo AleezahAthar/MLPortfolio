@@ -34,3 +34,5 @@ https://github.com/AleezahAthar/MLPortfolio/blob/db540fa75ab1752c8080295a6c1df2c
 Portfolio Component 5 Machine Learning with sklearn:
 https://github.com/AleezahAthar/MLPortfolio/blob/217a2e0368c099edf9894b700b9b2e62463fc89d/ML%20with%20sklearn/ML%20with%20SKLearn.pdf
 
+Portfolio Component 6 Image Classification
+https://github.com/AleezahAthar/MLPortfolio/blob/e91dcd23141c9693387130f1ba118a4344726f95/Image_Classification.pdf
