@@ -32,11 +32,7 @@ Skills acquired: Proficiency in C++, R and Python, data handling and manipulatio
 
 
 As a Data Science major, I have always been fascinated by the field of Machine Learning and its potential applications. This course has provided me with a strong foundation in the key concepts and techniques of machine learning, and I am excited to explore this field further.
-
 To deepen my understanding of machine learning, I plan to conduct research into each of the topics covered in the course. By delving deeper into the theory behind the algorithms and methods, I hope to gain a more sophisticated understanding of how they work and their potential applications.
-
 Additionally, I plan to revisit the projects I completed for this course and try to improve upon them. By applying the knowledge and techniques I have learned since completing those projects, I believe I can make them even better and more effective.
-
 One area of particular interest to me is transfer learning in image classification. Although I was unable to complete this part of the project during the course, I plan to work on it over the summer. By applying transfer learning techniques to improve the accuracy of the model, I hope to gain a deeper understanding of how this technique works and its potential applications in real-world scenarios.
-
 Overall, I am excited to continue exploring the field of machine learning and applying the knowledge and skills I have gained in this course to real-world problems and applications.
